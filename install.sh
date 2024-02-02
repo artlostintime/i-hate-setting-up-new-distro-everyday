@@ -4,14 +4,20 @@
 
 # Function to prompt for boolean input
 prompt_bool() {
-    while true; do
-        read -p "$1 (y/n): " yn
-        case $yn in
-            [Yy]* ) return 0;;
-            [Nn]* ) return 1;;
-            * ) echo "Please answer yes or no.";;
-        esac
-    done
+    # Check if the shell is interactive
+    if [[ $- == *i* ]]; then
+        while true; do
+            read -p "$1 (y/n): " yn
+            case $yn in
+                [Yy]* ) return 0;;
+                [Nn]* ) return 1;;
+                * ) echo "Please answer yes or no.";;
+            esac
+        done
+    else
+        # Default to 'no' in a non-interactive shell
+        return 1
+    fi
 }
 
 # Update and upgrade system
